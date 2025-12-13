@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" prefHeight="330.0" prefWidth="568.0" spacing="16"
+      xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.kuet_library_management_desktop.LibraryController">
+
+    <padding>
+        <Insets bottom="24" left="24" right="24" top="24"/>
+    </padding>
+
+    <Label text="KUET Library Management">
+        <font>
+            <Font size="22"/>
+        </font>
+    </Label>
+
+    <HBox alignment="CENTER" spacing="12">
+        <Button onAction="#openAdminView" text="Open Admin Page"/>
+        <Button onAction="#openStudentView" text="Open Student Page"/>
+    </HBox>
+
+</VBox>
