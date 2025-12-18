@@ -10,7 +10,7 @@ public class LibraryApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("library_view.fxml")
+                getClass().getResource("Library_view.fxml")
         );
 
         Scene scene = new Scene(loader.load());

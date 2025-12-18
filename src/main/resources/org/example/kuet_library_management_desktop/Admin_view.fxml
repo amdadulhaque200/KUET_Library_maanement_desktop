@@ -9,22 +9,23 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.kuet_library_management_desktop.StudentController"
-            prefHeight="400.0" prefWidth="600.0">
+            fx:controller="org.example.kuet_library_management_desktop.AdminController"
+            prefHeight="500.0" prefWidth="700.0">
 
     <!-- Top Header -->
     <top>
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-background-color: #2c3e50; -fx-padding: 10;">
-            <Label text="Welcome, Student!" style="-fx-text-fill: white; -fx-font-size: 16px;" />
+            <Label text="Welcome, Admin!" style="-fx-text-fill: white; -fx-font-size: 16px;" />
         </HBox>
     </top>
 
     <!-- Left Navigation Menu -->
     <left>
         <VBox spacing="10" style="-fx-background-color: #34495e; -fx-padding: 10;">
-            <Button text="Profile" fx:id="profileBtn" style="-fx-text-fill: white; -fx-background-color: #1abc9c;" />
-            <Button text="Book Search" fx:id="bookSearchBtn" style="-fx-text-fill: white; -fx-background-color: #1abc9c;" />
-            <Button text="Issued Books" fx:id="issuedBooksBtn" style="-fx-text-fill: white; -fx-background-color: #1abc9c;" />
+            <Button text="Dashboard" fx:id="dashboardBtn" style="-fx-text-fill: white; -fx-background-color: #3498db;" />
+            <Button text="Manage Books" fx:id="manageBooksBtn" style="-fx-text-fill: white; -fx-background-color: #3498db;" />
+            <Button text="Manage Students" fx:id="manageStudentsBtn" style="-fx-text-fill: white; -fx-background-color: #3498db;" />
+            <Button text="Issue/Return Books" fx:id="issueReturnBtn" style="-fx-text-fill: white; -fx-background-color: #3498db;" />
             <Button text="Logout" fx:id="logoutBtn" style="-fx-text-fill: white; -fx-background-color: #e74c3c;" />
         </VBox>
     </left>
@@ -34,3 +35,4 @@
         <StackPane fx:id="contentPane" style="-fx-background-color: #ecf0f1;" />
     </center>
 </BorderPane>
+

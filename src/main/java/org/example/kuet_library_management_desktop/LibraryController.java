@@ -12,12 +12,12 @@ public class LibraryController {
 
     @FXML
     private void openAdminView() {
-        openWindow("admin-view.fxml", "Admin Dashboard");
+        openWindow("Admin_view.fxml", "Admin Dashboard");
     }
 
     @FXML
     private void openStudentView() {
-        openWindow("student-view.fxml", "Student Dashboard");
+        openWindow("Student_view.fxml", "Student Dashboard");
     }
 
     private void openWindow(String fxmlFile, String title) {
