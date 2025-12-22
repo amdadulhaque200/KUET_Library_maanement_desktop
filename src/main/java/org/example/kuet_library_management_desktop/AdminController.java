@@ -7,7 +7,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-
 public class AdminController {
 
     @FXML
@@ -16,22 +15,18 @@ public class AdminController {
     @FXML
     private Button dashboardBtn, manageBooksBtn, manageStudentsBtn, issueReturnBtn, logoutBtn;
 
-    // Mock data for books
     private ObservableList<Book> books = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        // Load Dashboard view by default
         loadDashboardView();
 
-        // Button actions
         dashboardBtn.setOnAction(e -> loadDashboardView());
         manageBooksBtn.setOnAction(e -> loadManageBooksView());
         manageStudentsBtn.setOnAction(e -> loadManageStudentsView());
         issueReturnBtn.setOnAction(e -> loadIssueReturnView());
         logoutBtn.setOnAction(e -> handleLogout());
 
-        // Initialize mock books
         initBooks();
     }
 
@@ -45,7 +40,6 @@ public class AdminController {
         );
     }
 
-    // Load Dashboard view
     private void loadDashboardView() {
         VBox dashboard = new VBox(20);
         dashboard.setStyle("-fx-padding: 20; -fx-alignment: center;");
@@ -68,7 +62,6 @@ public class AdminController {
         contentPane.getChildren().setAll(dashboard);
     }
 
-    // Load Manage Books view
     private void loadManageBooksView() {
         VBox manageBooksView = new VBox(10);
         manageBooksView.setStyle("-fx-padding: 20;");
@@ -76,7 +69,6 @@ public class AdminController {
         Label title = new Label("Manage Books");
         title.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
 
-        // Add book form
         TextField titleField = new TextField();
         titleField.setPromptText("Book Title");
 
@@ -105,7 +97,6 @@ public class AdminController {
         contentPane.getChildren().setAll(manageBooksView);
     }
 
-    // Load Manage Students view
     private void loadManageStudentsView() {
         VBox manageStudentsView = new VBox(20);
         manageStudentsView.setStyle("-fx-padding: 20; -fx-alignment: center;");
@@ -120,7 +111,6 @@ public class AdminController {
         contentPane.getChildren().setAll(manageStudentsView);
     }
 
-    // Load Issue/Return Books view
     private void loadIssueReturnView() {
         VBox issueReturnView = new VBox(20);
         issueReturnView.setStyle("-fx-padding: 20; -fx-alignment: center;");
@@ -147,4 +137,3 @@ public class AdminController {
         alert.showAndWait();
     }
 }
-

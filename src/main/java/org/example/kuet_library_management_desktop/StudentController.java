@@ -20,7 +20,6 @@ public class StudentController {
     @FXML
     private Button profileBtn, bookSearchBtn, issuedBooksBtn, logoutBtn;
 
-    // Mock data for books
     private ObservableList<Book> books = FXCollections.observableArrayList();
     private ObservableList<Book> issuedBooks = FXCollections.observableArrayList();
 
@@ -44,29 +43,25 @@ public class StudentController {
         );
     }
 
-    // Load Profile view
     private void loadProfileView() {
         try {
-            Node node = FXMLLoader.load(getClass().getResource("Profile_view.fxml"));
+            Node node = FXMLLoader.load(getClass().getResource("/org/example/kuet_library_management_desktop/Profile_view.fxml"));
             contentPane.getChildren().setAll(node);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    // Load Book Search view with TableView populated
     private void loadBookSearchView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("BookSearch_view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/kuet_library_management_desktop/BookSearch_view.fxml"));
             Node node = loader.load();
 
-            // Get controller for search functionality
             VBox root = (VBox) node;
             TableView<Book> table = (TableView<Book>) root.lookup("#booksTable");
             TextField searchField = (TextField) root.lookup("#searchField");
             Button searchBtn = (Button) root.lookup("#searchBtn");
 
-            // Set up table columns with cell value factories
             TableColumn<Book, Integer> idCol = (TableColumn<Book, Integer>) table.getColumns().get(0);
             TableColumn<Book, String> titleCol = (TableColumn<Book, String>) table.getColumns().get(1);
             TableColumn<Book, String> authorCol = (TableColumn<Book, String>) table.getColumns().get(2);
@@ -94,7 +89,6 @@ public class StudentController {
                 table.setItems(filtered);
             });
 
-            // Double click to borrow book
             table.setRowFactory(tv -> {
                 TableRow<Book> row = new TableRow<>();
                 row.setOnMouseClicked(event -> {
@@ -124,7 +118,7 @@ public class StudentController {
 
     private void loadIssuedBooksView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("IssuedBooks_view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/kuet_library_management_desktop/IssuedBooks_view.fxml"));
             Node node = loader.load();
 
             VBox root = (VBox) node;

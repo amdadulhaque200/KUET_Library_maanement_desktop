@@ -1,7 +1,9 @@
 package org.example.kuet_library_management_desktop;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
@@ -11,27 +13,27 @@ import java.io.IOException;
 public class LibraryController {
 
     @FXML
-    private void openAdminView() {
-        openWindow("Admin_view.fxml", "Admin Dashboard");
+    private void openAdminView(ActionEvent event) {
+        openWindow(event, "/org/example/kuet_library_management_desktop/Admin_view.fxml", "Admin Dashboard");
     }
 
     @FXML
-    private void openStudentView() {
-        openWindow("Student_view.fxml", "Student Dashboard");
+    private void openStudentView(ActionEvent event) {
+        openWindow(event, "/org/example/kuet_library_management_desktop/Student_view.fxml", "Student Dashboard");
     }
 
-    private void openWindow(String fxmlFile, String title) {
+    private void openWindow(ActionEvent event, String fxmlPath, String title) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource(fxmlFile)
+                    getClass().getResource(fxmlPath)
             );
-            Stage stage = new Stage();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle(title);
             stage.setScene(new Scene(loader.load()));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert("Error", "Cannot load " + fxmlFile + ". Check the file path and existence.");
+            showAlert("Error", "Cannot load " + fxmlPath + ". Check the file path and existence.");
         }
     }
 
