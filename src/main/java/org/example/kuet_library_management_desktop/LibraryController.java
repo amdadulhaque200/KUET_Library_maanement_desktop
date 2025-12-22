@@ -14,9 +14,6 @@ import java.util.Optional;
 
 public class LibraryController {
 
-    // Shared admin password for all admins; change as needed
-    private static final String ADMIN_PASSWORD = "admin123";
-
     @FXML
     private void openAdminView(ActionEvent event) {
         TextInputDialog dialog = new TextInputDialog();
@@ -27,7 +24,8 @@ public class LibraryController {
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
             String entered = result.get();
-            if (ADMIN_PASSWORD.equals(entered)) {
+            String stored = PasswordStore.getPassword();
+            if (stored.equals(entered)) {
                 openWindow(event, "/org/example/kuet_library_management_desktop/Admin_view.fxml", "Admin Dashboard");
             } else {
                 showAlert("Authentication Failed", "Incorrect password. Access denied.");
