@@ -2,15 +2,12 @@ package org.example.kuet_library_management_desktop;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.event.ActionEvent;
 
 public class AdminController {
 
@@ -19,8 +16,6 @@ public class AdminController {
 
     @FXML
     private Button manageBooksBtn, manageStudentsBtn, issueReturnBtn, logoutBtn;
-    @FXML
-    private Button changePasswordBtn;
 
     private final ObservableList<Book> books = FXCollections.observableArrayList();
 
@@ -44,34 +39,6 @@ public class AdminController {
                 new Book(4, "Database Systems", "Author D", "Database", "Available"),
                 new Book(5, "Operating Systems", "Author E", "CS", "Available")
         );
-    }
-
-    @FXML
-    private void handleChangePassword(ActionEvent event) {
-        event.consume();
-
-        TextInputDialog dlg1 = new TextInputDialog();
-        dlg1.setTitle("Change Admin Password");
-        dlg1.setHeaderText("Enter new password");
-        dlg1.setContentText("New password:");
-        String newPass = dlg1.showAndWait().orElse(null);
-        if (newPass == null || newPass.isEmpty()) {
-            showAlert("Input error", "Password cannot be empty", Alert.AlertType.ERROR);
-            return;
-        }
-
-        TextInputDialog dlg2 = new TextInputDialog();
-        dlg2.setTitle("Confirm Password");
-        dlg2.setHeaderText("Confirm new password");
-        dlg2.setContentText("Confirm password:");
-        String confirm = dlg2.showAndWait().orElse(null);
-        if (!newPass.equals(confirm)) {
-            showAlert("Mismatch", "Passwords do not match", Alert.AlertType.ERROR);
-            return;
-        }
-
-        PasswordStore.setPassword(newPass);
-        showAlert("Success", "Admin password updated", Alert.AlertType.INFORMATION);
     }
 
     private void loadManageBooksView() {
@@ -142,7 +109,7 @@ public class AdminController {
             }
         });
 
-        searchField.setOnAction(e -> searchBtn.fire());
+        searchField.setOnAction(ev -> { ev.consume(); searchBtn.fire(); });
 
         HBox top = new HBox(8, new Label("Search by ID:"), searchField, new Region(), searchBtn);
         HBox.setHgrow(searchField, javafx.scene.layout.Priority.NEVER);
@@ -189,7 +156,6 @@ public class AdminController {
             if (book == null) { showAlert("Not found", "Book not found: " + bid, Alert.AlertType.ERROR); return; }
             if (!"Available".equalsIgnoreCase(book.getStatus())) { showAlert("Unavailable", "Book is not available to issue", Alert.AlertType.ERROR); return; }
 
-            // perform issue
             book.setStatus("Issued");
             Student st = sOpt.get();
             st.setBorrowedCount(st.getBorrowedCount() + 1);
@@ -220,7 +186,6 @@ public class AdminController {
             java.util.Optional<Student> sOpt = repo.findById(sid);
             if (sOpt.isEmpty()) { showAlert("Not found", "Student not found: " + sid, Alert.AlertType.ERROR); return; }
 
-            // perform return
             book.setStatus("Available");
             Student st = sOpt.get();
             if (st.getBorrowedCount() > 0) st.setBorrowedCount(st.getBorrowedCount() - 1);
@@ -233,8 +198,6 @@ public class AdminController {
         issueReturnView.getChildren().addAll(title, buttons);
         contentPane.getChildren().setAll(issueReturnView);
     }
-
-    // helper to find book by id in the in-memory list
     private Book findBookById(int id) {
         for (Book b : books) if (b.getId() == id) return b;
         return null;
