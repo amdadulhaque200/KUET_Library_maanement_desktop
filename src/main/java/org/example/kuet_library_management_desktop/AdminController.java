@@ -18,15 +18,16 @@ public class AdminController {
     private StackPane contentPane;
 
     @FXML
-    private Button dashboardBtn, manageBooksBtn, manageStudentsBtn, issueReturnBtn, logoutBtn;
+    private Button manageBooksBtn, manageStudentsBtn, issueReturnBtn, logoutBtn;
+    @FXML
+    private Button changePasswordBtn;
 
     private final ObservableList<Book> books = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        loadDashboardView();
+        loadManageStudentsView();
 
-        dashboardBtn.setOnAction(e -> { e.consume(); loadDashboardView(); });
         manageBooksBtn.setOnAction(e -> { e.consume(); loadManageBooksView(); });
         manageStudentsBtn.setOnAction(e -> { e.consume(); loadManageStudentsView(); });
         issueReturnBtn.setOnAction(e -> { e.consume(); loadIssueReturnView(); });
@@ -43,28 +44,6 @@ public class AdminController {
                 new Book(4, "Database Systems", "Author D", "Database", "Available"),
                 new Book(5, "Operating Systems", "Author E", "CS", "Available")
         );
-    }
-
-    private void loadDashboardView() {
-        VBox dashboard = new VBox(20);
-        dashboard.setStyle("-fx-padding: 20; -fx-alignment: center;");
-
-        Label title = new Label("Admin Dashboard");
-        title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
-
-        Label totalBooks = new Label("Total Books: " + books.size());
-        totalBooks.setStyle("-fx-font-size: 16px;");
-
-        Label availableBooks = new Label("Available Books: " +
-            books.stream().filter(b -> b.getStatus().equals("Available")).count());
-        availableBooks.setStyle("-fx-font-size: 16px;");
-
-        Label issuedBooks = new Label("Issued Books: " +
-            books.stream().filter(b -> b.getStatus().equals("Issued")).count());
-        issuedBooks.setStyle("-fx-font-size: 16px;");
-
-        dashboard.getChildren().addAll(title, totalBooks, availableBooks, issuedBooks);
-        contentPane.getChildren().setAll(dashboard);
     }
 
     @FXML

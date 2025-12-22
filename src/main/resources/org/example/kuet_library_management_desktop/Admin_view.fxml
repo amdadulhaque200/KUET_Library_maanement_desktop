@@ -23,7 +23,6 @@
 
     <left>
         <VBox spacing="10" style="-fx-background-color: #34495e; -fx-padding: 10;">
-            <Button text="Dashboard" fx:id="dashboardBtn" style="-fx-text-fill: white; -fx-background-color: #3498db;" />
             <Button text="Manage Books" fx:id="manageBooksBtn" style="-fx-text-fill: white; -fx-background-color: #3498db;" />
             <Button text="Manage Students" fx:id="manageStudentsBtn" style="-fx-text-fill: white; -fx-background-color: #3498db;" />
             <Button text="Issue/Return Books" fx:id="issueReturnBtn" style="-fx-text-fill: white; -fx-background-color: #3498db;" />
