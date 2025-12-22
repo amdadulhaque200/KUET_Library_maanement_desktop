@@ -18,15 +18,16 @@ public class AdminController {
     private StackPane contentPane;
 
     @FXML
-    private Button dashboardBtn, manageBooksBtn, manageStudentsBtn, issueReturnBtn, logoutBtn;
+    private Button manageBooksBtn, manageStudentsBtn, issueReturnBtn, logoutBtn;
+    @FXML
+    private Button changePasswordBtn;
 
     private final ObservableList<Book> books = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        loadDashboardView();
+        loadManageStudentsView();
 
-        dashboardBtn.setOnAction(e -> { e.consume(); loadDashboardView(); });
         manageBooksBtn.setOnAction(e -> { e.consume(); loadManageBooksView(); });
         manageStudentsBtn.setOnAction(e -> { e.consume(); loadManageStudentsView(); });
         issueReturnBtn.setOnAction(e -> { e.consume(); loadIssueReturnView(); });
