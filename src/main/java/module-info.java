@@ -2,6 +2,7 @@ module org.example.kuet_library_management_desktop {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
+    requires java.prefs;
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;

@@ -6,15 +6,31 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class LibraryController {
 
     @FXML
     private void openAdminView(ActionEvent event) {
-        openWindow(event, "/org/example/kuet_library_management_desktop/Admin_view.fxml", "Admin Dashboard");
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Admin Login");
+        dialog.setHeaderText("Enter admin password");
+        dialog.setContentText("Password:");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            String entered = result.get();
+            String stored = PasswordStore.getPassword();
+            if (stored.equals(entered)) {
+                openWindow(event, "/org/example/kuet_library_management_desktop/Admin_view.fxml", "Admin Dashboard");
+            } else {
+                showAlert("Authentication Failed", "Incorrect password. Access denied.");
+            }
+        }
     }
 
     @FXML
