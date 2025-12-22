@@ -155,17 +155,89 @@ public class AdminController {
     }
 
     private void loadIssueReturnView() {
-        VBox issueReturnView = new VBox(20);
-        issueReturnView.setStyle("-fx-padding: 20; -fx-alignment: center;");
+        VBox issueReturnView = new VBox(12);
+        issueReturnView.setStyle("-fx-padding: 16;");
 
-        Label title = new Label("Issue/Return Books");
-        title.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+        Label title = new Label("Issue / Return Books");
+        title.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
-        Label info = new Label("Book issue/return functionality coming soon...");
-        info.setStyle("-fx-font-size: 14px;");
+        Button issueBtn = new Button("Issue");
+        Button returnBtn = new Button("Return");
 
-        issueReturnView.getChildren().addAll(title, info);
+        issueBtn.setOnAction(e -> {
+            e.consume();
+            TextInputDialog sDlg = new TextInputDialog();
+            sDlg.setTitle("Issue Book - Student ID");
+            sDlg.setHeaderText("Enter student ID");
+            String sid = sDlg.showAndWait().orElse("").trim();
+            if (sid.isEmpty()) { showAlert("Input error", "Student ID required", Alert.AlertType.ERROR); return; }
+
+            TextInputDialog bDlg = new TextInputDialog();
+            bDlg.setTitle("Issue Book - Book ID");
+            bDlg.setHeaderText("Enter book ID (number)");
+            String bidS = bDlg.showAndWait().orElse("").trim();
+            if (bidS.isEmpty()) { showAlert("Input error", "Book ID required", Alert.AlertType.ERROR); return; }
+
+            int bid;
+            try { bid = Integer.parseInt(bidS); } catch (NumberFormatException ex) { showAlert("Input error", "Book ID must be a number", Alert.AlertType.ERROR); return; }
+
+            StudentRepository repo = new StudentRepository();
+            java.util.Optional<Student> sOpt = repo.findById(sid);
+            if (sOpt.isEmpty()) { showAlert("Not found", "Student not found: " + sid, Alert.AlertType.ERROR); return; }
+
+            Book book = findBookById(bid);
+            if (book == null) { showAlert("Not found", "Book not found: " + bid, Alert.AlertType.ERROR); return; }
+            if (!"Available".equalsIgnoreCase(book.getStatus())) { showAlert("Unavailable", "Book is not available to issue", Alert.AlertType.ERROR); return; }
+
+            // perform issue
+            book.setStatus("Issued");
+            Student st = sOpt.get();
+            st.setBorrowedCount(st.getBorrowedCount() + 1);
+            showAlert("Success", "Book " + bid + " issued to " + st.getName(), Alert.AlertType.INFORMATION);
+        });
+
+        returnBtn.setOnAction(e -> {
+            e.consume();
+            TextInputDialog bDlg = new TextInputDialog();
+            bDlg.setTitle("Return Book - Book ID");
+            bDlg.setHeaderText("Enter book ID (number)");
+            String bidS = bDlg.showAndWait().orElse("").trim();
+            if (bidS.isEmpty()) { showAlert("Input error", "Book ID required", Alert.AlertType.ERROR); return; }
+            int bid;
+            try { bid = Integer.parseInt(bidS); } catch (NumberFormatException ex) { showAlert("Input error", "Book ID must be a number", Alert.AlertType.ERROR); return; }
+
+            TextInputDialog sDlg = new TextInputDialog();
+            sDlg.setTitle("Return Book - Student ID");
+            sDlg.setHeaderText("Enter student ID (who returns)");
+            String sid = sDlg.showAndWait().orElse("").trim();
+            if (sid.isEmpty()) { showAlert("Input error", "Student ID required", Alert.AlertType.ERROR); return; }
+
+            Book book = findBookById(bid);
+            if (book == null) { showAlert("Not found", "Book not found: " + bid, Alert.AlertType.ERROR); return; }
+            if (!"Issued".equalsIgnoreCase(book.getStatus())) { showAlert("Invalid", "Book is not marked as issued", Alert.AlertType.ERROR); return; }
+
+            StudentRepository repo = new StudentRepository();
+            java.util.Optional<Student> sOpt = repo.findById(sid);
+            if (sOpt.isEmpty()) { showAlert("Not found", "Student not found: " + sid, Alert.AlertType.ERROR); return; }
+
+            // perform return
+            book.setStatus("Available");
+            Student st = sOpt.get();
+            if (st.getBorrowedCount() > 0) st.setBorrowedCount(st.getBorrowedCount() - 1);
+            showAlert("Success", "Book " + bid + " returned by " + st.getName(), Alert.AlertType.INFORMATION);
+        });
+
+        HBox buttons = new HBox(10, issueBtn, returnBtn);
+        buttons.setStyle("-fx-alignment: center;");
+
+        issueReturnView.getChildren().addAll(title, buttons);
         contentPane.getChildren().setAll(issueReturnView);
+    }
+
+    // helper to find book by id in the in-memory list
+    private Book findBookById(int id) {
+        for (Book b : books) if (b.getId() == id) return b;
+        return null;
     }
 
     private void handleLogout() {
