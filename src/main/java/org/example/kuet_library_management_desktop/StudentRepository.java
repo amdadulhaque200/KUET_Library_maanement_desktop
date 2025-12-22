@@ -14,9 +14,20 @@ public class StudentRepository {
         students.add(new Student("S1004", "Dina Noor", "dina@example.com", 3));
     }
 
-    public List<Student> getAll() { return new ArrayList<>(students); }
+    public List<Student> getAll() {
+        return new ArrayList<>(students);
+    }
+
     public Optional<Student> findById(String id) {
         return students.stream().filter(s -> s.getId().equals(id)).findFirst();
+    }
+
+    public void save(Student student) {
+        findById(student.getId()).ifPresentOrElse(existing -> {
+            existing.setName(student.getName());
+            existing.setEmail(student.getEmail());
+            existing.setBorrowedCount(student.getBorrowedCount());
+        }, () -> students.add(student));
     }
 }
 

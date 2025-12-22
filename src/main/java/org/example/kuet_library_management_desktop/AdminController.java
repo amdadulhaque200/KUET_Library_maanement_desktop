@@ -78,7 +78,7 @@ public class AdminController {
     }
 
     private void loadManageStudentsView() {
-        StudentRepository repo = new StudentRepository();
+        org.example.kuet_library_management_desktop.StudentRepository repo = new org.example.kuet_library_management_desktop.StudentRepository();
         TextField searchField = new TextField();
         searchField.setPromptText("Enter student id");
 
@@ -96,7 +96,7 @@ public class AdminController {
                 resultPane.getChildren().add(new Label("Please enter a student ID to search."));
                 return;
             }
-            java.util.Optional<Student> opt = repo.findById(id);
+            java.util.Optional<Student> opt = repo.getAll().stream().filter(s -> s.getId().equals(id)).findFirst();
             if (opt.isPresent()) {
                 Student sel = opt.get();
                 Label idL = new Label("ID: " + sel.getId());
@@ -148,8 +148,8 @@ public class AdminController {
             int bid;
             try { bid = Integer.parseInt(bidS); } catch (NumberFormatException ex) { showAlert("Input error", "Book ID must be a number", Alert.AlertType.ERROR); return; }
 
-            StudentRepository repo = new StudentRepository();
-            java.util.Optional<Student> sOpt = repo.findById(sid);
+            org.example.kuet_library_management_desktop.StudentRepository repo = new org.example.kuet_library_management_desktop.StudentRepository();
+            java.util.Optional<Student> sOpt = repo.getAll().stream().filter(s -> s.getId().equals(sid)).findFirst();
             if (sOpt.isEmpty()) { showAlert("Not found", "Student not found: " + sid, Alert.AlertType.ERROR); return; }
 
             Book book = findBookById(bid);
@@ -182,8 +182,8 @@ public class AdminController {
             if (book == null) { showAlert("Not found", "Book not found: " + bid, Alert.AlertType.ERROR); return; }
             if (!"Issued".equalsIgnoreCase(book.getStatus())) { showAlert("Invalid", "Book is not marked as issued", Alert.AlertType.ERROR); return; }
 
-            StudentRepository repo = new StudentRepository();
-            java.util.Optional<Student> sOpt = repo.findById(sid);
+            org.example.kuet_library_management_desktop.StudentRepository repo = new org.example.kuet_library_management_desktop.StudentRepository();
+            java.util.Optional<Student> sOpt = repo.getAll().stream().filter(s -> s.getId().equals(sid)).findFirst();
             if (sOpt.isEmpty()) { showAlert("Not found", "Student not found: " + sid, Alert.AlertType.ERROR); return; }
 
             book.setStatus("Available");

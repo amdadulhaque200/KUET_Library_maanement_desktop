@@ -37,7 +37,20 @@ public class LibraryController {
 
     @FXML
     private void openStudentView(ActionEvent event) {
-        openWindow(event, "/org/example/kuet_library_management_desktop/Student_view.fxml", "Student Dashboard");
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Student Login");
+        dialog.setHeaderText("Enter student password");
+        dialog.setContentText("Password:");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            String entered = result.get();
+            if ("1234".equals(entered)) {
+                openWindow(event, "/org/example/kuet_library_management_desktop/Student_view.fxml", "Student Dashboard");
+            } else {
+                showAlert("Authentication Failed", "Incorrect password. Access denied.");
+            }
+        }
     }
 
     private void openWindow(ActionEvent event, String fxmlPath, String title) {
@@ -62,9 +75,10 @@ public class LibraryController {
             stage.setTitle(title);
             stage.setScene(new Scene(loader.load()));
             stage.show();
-        } catch (IOException e) {
-            System.err.println("Error loading FXML " + fxmlPath + ": " + e.getMessage());
-            showAlert("Error", "Cannot load " + fxmlPath + ". Check the file path and existence.");
+        } catch (Throwable t) {
+            System.err.println("Error loading FXML " + fxmlPath + ": " + t + "\nCause: " + t.getCause());
+            t.printStackTrace();
+            showAlert("Error", "Cannot load " + fxmlPath + ". See console for details: " + t.toString());
         }
     }
 
