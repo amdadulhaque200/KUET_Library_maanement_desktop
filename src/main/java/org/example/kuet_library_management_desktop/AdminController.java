@@ -31,6 +31,11 @@ public class AdminController {
         initBooks();
     }
 
+    private void setContent(javafx.scene.Node node) {
+        contentPane.getChildren().setAll(node);
+    }
+
+
     private void initBooks() {
         books.addAll(
                 new Book(1, "Java Programming", "Author A", "Programming", "Available"),
@@ -74,7 +79,7 @@ public class AdminController {
         });
 
         manageBooksView.getChildren().addAll(title, titleField, authorField, genreField, addBookBtn);
-        contentPane.getChildren().setAll(manageBooksView);
+        setContent(manageBooksView);
     }
 
     private void loadManageStudentsView() {
@@ -118,7 +123,7 @@ public class AdminController {
 
         VBox root = new VBox(8, top, resultPane);
         root.setStyle("-fx-padding: 10;");
-        contentPane.getChildren().setAll(root);
+        setContent(root);
     }
 
     private void loadIssueReturnView() {
@@ -196,7 +201,7 @@ public class AdminController {
         buttons.setStyle("-fx-alignment: center;");
 
         issueReturnView.getChildren().addAll(title, buttons);
-        contentPane.getChildren().setAll(issueReturnView);
+        setContent(issueReturnView);
     }
     private Book findBookById(int id) {
         for (Book b : books) if (b.getId() == id) return b;

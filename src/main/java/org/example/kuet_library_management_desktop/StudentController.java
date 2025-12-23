@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
@@ -26,27 +27,16 @@ public class StudentController {
 
     @FXML
     public void initialize() {
-        try {
-            System.out.println("[DEBUG] StudentController.initialize - contentPane=" + (contentPane!=null)
-                    + ", profileBtn=" + (profileBtn!=null)
-                    + ", bookSearchBtn=" + (bookSearchBtn!=null)
-                    + ", issuedBooksBtn=" + (issuedBooksBtn!=null)
-                    + ", logoutBtn=" + (logoutBtn!=null));
-            // protect initialization so any exception is logged clearly
-            loadProfileView();
+        loadProfileView();
+        profileBtn.setOnAction(evt -> { evt.consume(); loadProfileView(); });
+        bookSearchBtn.setOnAction(evt -> { evt.consume(); loadBookSearchView(); });
+        issuedBooksBtn.setOnAction(evt -> { evt.consume(); loadIssuedBooksView(); });
+        logoutBtn.setOnAction(evt -> { evt.consume(); handleLogout(); });
+        initBooks();
+    }
 
-            profileBtn.setOnAction(evt -> loadProfileView());
-            bookSearchBtn.setOnAction(evt -> loadBookSearchView());
-            issuedBooksBtn.setOnAction(evt -> loadIssuedBooksView());
-            logoutBtn.setOnAction(evt -> handleLogout());
-
-            initBooks();
-        } catch (Throwable t) {
-            System.err.println("Exception during StudentController.initialize: " + t);
-            t.printStackTrace();
-            // rethrow so FXMLLoader still gets the error if needed
-            throw t instanceof RuntimeException ? (RuntimeException) t : new RuntimeException(t);
-        }
+    private void setContent(Node node) {
+        contentPane.getChildren().setAll(node);
     }
 
     private void initBooks() {
@@ -62,7 +52,7 @@ public class StudentController {
             URL url = resolveResource("/org/example/kuet_library_management_desktop/Profile_view.fxml");
             FXMLLoader loader = new FXMLLoader(url);
             Node node = loader.load();
-            contentPane.getChildren().setAll(node);
+            setContent(node);
         } catch (IOException e) {
             System.err.println("Failed to load Profile_view.fxml: " + e.getMessage());
             e.printStackTrace();
@@ -76,58 +66,20 @@ public class StudentController {
             Node node = loader.load();
 
             VBox root = (VBox) node;
-            TableView<Book> table = (TableView<Book>) root.lookup("#booksTable");
             TextField searchField = (TextField) root.lookup("#searchField");
             Button searchBtn = (Button) root.lookup("#searchBtn");
+            Node rbLookup = root.lookup("#resultsBox");
+            VBox tmpResults = (rbLookup instanceof VBox) ? (VBox) rbLookup : null;
+            if (tmpResults == null) {
+                tmpResults = new VBox(8);
+                root.getChildren().add(tmpResults);
+            }
+            final VBox resultsBox = tmpResults;
 
-            TableColumn<Book, Integer> idCol = (TableColumn<Book, Integer>) table.getColumns().get(0);
-            TableColumn<Book, String> titleCol = (TableColumn<Book, String>) table.getColumns().get(1);
-            TableColumn<Book, String> authorCol = (TableColumn<Book, String>) table.getColumns().get(2);
-            TableColumn<Book, String> genreCol = (TableColumn<Book, String>) table.getColumns().get(3);
-            TableColumn<Book, String> statusCol = (TableColumn<Book, String>) table.getColumns().get(4);
+            searchBtn.setOnAction(evt -> { evt.consume(); String query = searchField.getText() == null ? "" : searchField.getText().toLowerCase(); populateResults(resultsBox, query); });
+            populateResults(resultsBox, "");
 
-            idCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getId()).asObject());
-            titleCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getTitle()));
-            authorCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getAuthor()));
-            genreCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getGenre()));
-            statusCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getStatus()));
-
-            table.setItems(books);
-
-            searchBtn.setOnAction(evt -> {
-                String query = searchField.getText().toLowerCase();
-                ObservableList<Book> filtered = FXCollections.observableArrayList();
-                for (Book b : books) {
-                    if (b.getTitle().toLowerCase().contains(query) ||
-                            b.getAuthor().toLowerCase().contains(query) ||
-                            b.getGenre().toLowerCase().contains(query)) {
-                        filtered.add(b);
-                    }
-                }
-                table.setItems(filtered);
-            });
-
-            table.setRowFactory(tv -> {
-                TableRow<Book> row = new TableRow<>();
-                row.setOnMouseClicked(event -> {
-                    if (event.getClickCount() == 2 && !row.isEmpty()) {
-                        Book selected = row.getItem();
-                        if (!issuedBooks.contains(selected) && selected.getStatus().equals("Available")) {
-                            selected.setStatus("Issued");
-                            issuedBooks.add(selected);
-                            table.refresh();
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Book borrowed: " + selected.getTitle());
-                            alert.showAndWait();
-                        } else {
-                            Alert alert = new Alert(Alert.AlertType.WARNING, "Book already issued!");
-                            alert.showAndWait();
-                        }
-                    }
-                });
-                return row;
-            });
-
-            contentPane.getChildren().setAll(node);
+            setContent(root);
 
         } catch (IOException e) {
             System.err.println("Failed to load BookSearch_view.fxml: " + e.getMessage());
@@ -136,36 +88,45 @@ public class StudentController {
     }
 
     private void loadIssuedBooksView() {
-        try {
-            URL url = resolveResource("/org/example/kuet_library_management_desktop/IssuedBooks_view.fxml");
-            FXMLLoader loader = new FXMLLoader(url);
-            Node node = loader.load();
+        VBox root = new VBox(10);
+        root.setStyle("-fx-padding: 20;");
+        Label title = new Label("Issued Books");
+        title.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
+        VBox list = new VBox(8);
+        root.getChildren().addAll(title, list);
+        populateIssued(list);
+        setContent(root);
+    }
 
-            VBox root = (VBox) node;
-            TableView<Book> table = (TableView<Book>) root.lookup("#issuedBooksTable");
-            TableColumn<Book, Integer> idCol = (TableColumn<Book, Integer>) table.getColumns().get(0);
-            TableColumn<Book, String> titleCol = (TableColumn<Book, String>) table.getColumns().get(1);
-            TableColumn<Book, String> authorCol = (TableColumn<Book, String>) table.getColumns().get(2);
-            TableColumn<Book, String> genreCol = (TableColumn<Book, String>) table.getColumns().get(3);
-            TableColumn<Book, String> statusCol = (TableColumn<Book, String>) table.getColumns().get(4);
+    private void populateResults(VBox resultsBox, String query) {
+        resultsBox.getChildren().clear();
+        for (Book b : books) {
+            if (query == null || query.isEmpty() || b.getTitle().toLowerCase().contains(query) ||
+                    b.getAuthor().toLowerCase().contains(query) || b.getGenre().toLowerCase().contains(query)) {
+                HBox row = new HBox(10);
 
-            idCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getId()).asObject());
-            titleCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getTitle()));
-            authorCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getAuthor()));
-            genreCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getGenre()));
-            statusCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getStatus()));
-
-            table.setItems(issuedBooks);
-
-            contentPane.getChildren().setAll(node);
-
-        } catch (IOException e) {
-            System.err.println("Failed to load IssuedBooks_view.fxml: " + e.getMessage());
-            e.printStackTrace();
+                resultsBox.getChildren().add(row);
+            }
         }
     }
 
-    // resolves a resource by trying class resource, classloader, and filesystem paths
+    private void populateIssued(VBox list) {
+        list.getChildren().clear();
+        for (Book b : issuedBooks) {
+            HBox row = new HBox(10);
+            Label lbl = new Label("[" + b.getId() + "] " + b.getTitle() + " — " + b.getAuthor());
+            Button returnBtn = new Button("Return");
+            returnBtn.setOnAction(e -> {
+                e.consume();
+                b.setStatus("Available");
+                issuedBooks.remove(b);
+                populateIssued(list);
+                showAlert("Success", "Book returned: " + b.getTitle(), Alert.AlertType.INFORMATION);
+            });
+            row.getChildren().addAll(lbl, returnBtn);
+            list.getChildren().add(row);
+        }
+    }
     private URL resolveResource(String path) throws IOException {
         URL url = getClass().getResource(path);
         if (url == null) {
@@ -182,5 +143,13 @@ public class StudentController {
 
     private void handleLogout() {
         System.out.println("Logging out...");
+    }
+
+    private void showAlert(String title, String message, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

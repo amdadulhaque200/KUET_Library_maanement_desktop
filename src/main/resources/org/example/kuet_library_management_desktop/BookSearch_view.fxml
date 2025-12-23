@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.*?>
 
-<VBox spacing="10" xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml" style="-fx-padding: 20;">
-    <Label text="Book Search" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+<VBox spacing="10" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+    <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Book Search" />
     <HBox spacing="10">
-        <TextField fx:id="searchField" promptText="Enter title/author/genre"/>
-        <Button text="Search" fx:id="searchBtn"/>
+        <TextField fx:id="searchField" promptText="Enter title/author/genre" />
+        <Button fx:id="searchBtn" text="Search" />
     </HBox>
     <TableView fx:id="booksTable" prefHeight="300">
         <columns>
-            <TableColumn fx:id="idColumn" text="ID" prefWidth="50" />
-            <TableColumn fx:id="titleColumn" text="Title" prefWidth="150" />
-            <TableColumn fx:id="authorColumn" text="Author" prefWidth="120" />
-            <TableColumn fx:id="genreColumn" text="Genre" prefWidth="100" />
-            <TableColumn fx:id="statusColumn" text="Status" prefWidth="80" />
+            <TableColumn fx:id="idColumn" prefWidth="50" text="ID" />
+            <TableColumn fx:id="titleColumn" prefWidth="129.40001678466797" text="Title" />
+            <TableColumn fx:id="authorColumn" prefWidth="141.0" text="Author" />
+            <TableColumn fx:id="genreColumn" prefWidth="100" text="Genre" />
+            <TableColumn fx:id="statusColumn" prefWidth="80" text="Status" />
         </columns>
     </TableView>
 </VBox>

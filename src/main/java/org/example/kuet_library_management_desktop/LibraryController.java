@@ -45,7 +45,7 @@ public class LibraryController {
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
             String entered = result.get();
-            if ("1234".equals(entered)) {
+            if ("1122".equals(entered)) {
                 openWindow(event, "/org/example/kuet_library_management_desktop/Student_view.fxml", "Student Dashboard");
             } else {
                 showAlert("Authentication Failed", "Incorrect password. Access denied.");

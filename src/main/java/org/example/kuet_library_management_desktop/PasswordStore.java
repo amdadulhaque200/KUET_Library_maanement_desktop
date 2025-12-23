@@ -23,7 +23,7 @@ public class PasswordStore {
                 System.err.println("Unable to read admin password file: " + e.getMessage());
             }
         }
-        return "1234";
+        return "1122";
     }
 
     public static void setPassword(String password) {
