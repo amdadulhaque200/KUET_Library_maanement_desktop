@@ -1,17 +1,10 @@
 module org.example.kuet_library_management_desktop {
     requires javafx.controls;
     requires javafx.fxml;
-    requires javafx.web;
-    requires java.prefs;
 
-    requires org.controlsfx.controls;
-    requires com.dlsc.formsfx;
-    requires net.synedra.validatorfx;
-    requires org.kordamp.ikonli.javafx;
-    requires org.kordamp.bootstrapfx.core;
-    requires eu.hansolo.tilesfx;
-    requires com.almasb.fxgl.all;
+    // If you later add other modular libraries (controlsfx, etc.) require them here.
 
+    // Allow FXMLLoader to access controller classes in this package
     opens org.example.kuet_library_management_desktop to javafx.fxml;
     exports org.example.kuet_library_management_desktop;
 }
