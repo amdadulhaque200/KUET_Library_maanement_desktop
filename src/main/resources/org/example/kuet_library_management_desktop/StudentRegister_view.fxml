@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="320.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.kuet_library_management_desktop.StudentRegisterController">
+    <children>
+        <VBox spacing="12.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <children>
+                <Label alignment="CENTER" style="-fx-font-size:16px; -fx-font-weight:bold;" text="Student Registration" />
+                <GridPane hgap="10.0" vgap="10.0">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" minWidth="100.0" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="30.0" />
+                        <RowConstraints minHeight="30.0" />
+                        <RowConstraints minHeight="30.0" />
+                        <RowConstraints minHeight="30.0" />
+                        <RowConstraints minHeight="30.0" />
+                    </rowConstraints>
+                    <children>
+                        <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="nameField" promptText="Full name" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                        <Label text="Roll:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="rollField" promptText="Roll number" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                        <Label text="Batch:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <TextField fx:id="batchField" promptText="Batch/Year" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                        <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                        <TextField fx:id="usernameField" promptText="Choose username" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                        <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                        <PasswordField fx:id="passwordField" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    </children>
+                </GridPane>
+
+                <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                    <children>
+                        <Button fx:id="registerButton" text="Register" textFill="#338941">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
+                        <Button fx:id="cancelButton" text="Cancel" textFill="#d93434" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
