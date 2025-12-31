@@ -2,6 +2,7 @@ package org.example.kuet_library_management_desktop;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
@@ -29,6 +30,11 @@ public class AdminController {
         logoutBtn.setOnAction(e -> { e.consume(); handleLogout(); });
 
         initBooks();
+    }
+
+    @FXML
+    private void onBack(ActionEvent event) {
+        Navigation.goBack(event);
     }
 
     private void setContent(javafx.scene.Node node) {

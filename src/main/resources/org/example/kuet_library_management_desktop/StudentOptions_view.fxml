@@ -10,6 +10,9 @@
         <Insets bottom="20" left="20" right="20" top="20" />
     </padding>
     <children>
+        <HBox alignment="CENTER_LEFT" spacing="8">
+            <Button text="←" onAction="#onBack" />
+        </HBox>
         <Button fx:id="loginBtn" defaultButton="true" onAction="#onLogin" prefWidth="200" text="Login" textFill="#0c332d">
          <font>
             <Font name="Cambria Bold" size="25.0" />

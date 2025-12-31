@@ -2,6 +2,7 @@ package org.example.kuet_library_management_desktop;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -33,6 +34,11 @@ public class StudentController {
         issuedBooksBtn.setOnAction(evt -> { evt.consume(); loadIssuedBooksView(); });
         logoutBtn.setOnAction(evt -> { evt.consume(); handleLogout(); });
         initBooks();
+    }
+
+    @FXML
+    private void onBack(ActionEvent event) {
+        Navigation.goBack(event);
     }
 
     private void setContent(Node node) {

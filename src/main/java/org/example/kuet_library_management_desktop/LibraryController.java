@@ -33,7 +33,11 @@ public class LibraryController {
             String entered = result.get();
             String stored = PasswordStore.getPassword();
             if (stored.equals(entered)) {
-                openWindow(event, "/org/example/kuet_library_management_desktop/Admin_view.fxml", "Admin Dashboard");
+                try {
+                    Navigation.open(event, "/org/example/kuet_library_management_desktop/Admin_view.fxml", "Admin Dashboard");
+                } catch (Exception e) {
+                    showAlert("Error", "Failed to open Admin view: " + e.getMessage());
+                }
             } else {
                 showAlert("Authentication Failed", "Incorrect password. Access denied.");
             }
@@ -42,8 +46,16 @@ public class LibraryController {
 
     @FXML
     private void openStudentView(ActionEvent event) {
-        // Instead of showing a password dialog, navigate to a Student options page
-        openWindow(event, "/org/example/kuet_library_management_desktop/StudentOptions_view.fxml", "Student");
+        try {
+            Navigation.open(event, "/org/example/kuet_library_management_desktop/StudentOptions_view.fxml", "Student");
+        } catch (Exception e) {
+            showAlert("Error", "Failed to open Student options: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void onBack(ActionEvent event) {
+        Navigation.goBack(event);
     }
 
     public void openWindow(ActionEvent event, String fxmlPath, String title) {
@@ -62,15 +74,12 @@ public class LibraryController {
             }
 
             System.out.println("[DEBUG] Resolved FXML URL for " + fxmlPath + " -> " + fxmlUrl);
-
-            // BOM-safe load: read bytes, strip UTF-8 BOM if present, then load from a ByteArrayInputStream
             Parent root;
             try (InputStream is = fxmlUrl.openStream(); ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
                 byte[] buf = new byte[4096];
                 int r;
                 while ((r = is.read(buf)) != -1) baos.write(buf, 0, r);
                 byte[] bytes = baos.toByteArray();
-                // strip UTF-8 BOM if present
                 if (bytes.length >= 3 && (bytes[0] & 0xFF) == 0xEF && (bytes[1] & 0xFF) == 0xBB && (bytes[2] & 0xFF) == 0xBF) {
                     byte[] tmp = new byte[bytes.length - 3];
                     System.arraycopy(bytes, 3, tmp, 0, tmp.length);

@@ -12,6 +12,10 @@
         <Insets bottom="24" left="24" right="24" top="24" />
     </padding>
 
+    <HBox alignment="CENTER_LEFT" spacing="8">
+        <Button fx:id="backBtn" text="←" onAction="#onBack" visible="false" />
+    </HBox>
+
     <Label text="KUET Library Management">
         <font>
             <Font name="System Bold Italic" size="33.0" />

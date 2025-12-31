@@ -1,35 +1,25 @@
 package org.example.kuet_library_management_desktop;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.net.URL;
 
 public class LibraryApplication extends Application {
 
+    public static void main(String[] args) {
+        Application.launch(args);
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
-        URL fxmlUrl = getClass().getResource("/org/example/kuet_library_management_desktop/Library_view.fxml");
-        if (fxmlUrl == null) {
-            fxmlUrl = getClass().getClassLoader().getResource("org/example/kuet_library_management_desktop/Library_view.fxml");
-        }
-        if (fxmlUrl == null) {
-            File f = new File("src/main/resources/org/example/kuet_library_management_desktop/Library_view.fxml");
-            if (f.exists()) fxmlUrl = f.toURI().toURL();
-        }
-        if (fxmlUrl == null) {
-            throw new RuntimeException("Cannot find Library_view.fxml on classpath or in src/main/resources");
-        }
+        String fxmlPath = "/org/example/kuet_library_management_desktop/Library_view.fxml";
 
-        System.out.println("[DEBUG] Resolved Library_view.fxml URL: " + fxmlUrl);
+        Parent root = Navigation.load(fxmlPath);
 
-        FXMLLoader loader = new FXMLLoader(fxmlUrl);
-        Scene scene = new Scene(loader.load());
         stage.setTitle("KUET Library Management");
-        stage.setScene(scene);
+        stage.setScene(new Scene(root));
         stage.show();
     }
 }
