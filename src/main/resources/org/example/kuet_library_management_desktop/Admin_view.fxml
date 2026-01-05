@@ -3,26 +3,27 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.kuet_library_management_desktop.AdminController">
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.kuet_library_management_desktop.AdminController">
 
     <top>
-        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #2c3e50; -fx-padding: 10;">
-            <Button text="←" onAction="#onBack" />
-            <Label style="-fx-text-fill: white; -fx-font-size: 16px;" text="Welcome, Admin!" />
+        <HBox alignment="CENTER_LEFT" spacing="10" styleClass="top-bar" style="-fx-background-color: #2c3e50; -fx-padding: 10;">
+            <Button text="←" onAction="#onBack" styleClass="button-back" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 16px; -fx-cursor: hand;" />
+            <Label text="Welcome, Admin!" styleClass="top-bar" style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;" />
             <Region HBox.hgrow="ALWAYS" />
         </HBox>
     </top>
 
     <left>
-        <VBox spacing="10" style="-fx-background-color: #34495e; -fx-padding: 10;">
-            <Button fx:id="manageBooksBtn" style="-fx-text-fill: white; -fx-background-color: #3498db;" text="Add Books" />
-            <Button fx:id="manageStudentsBtn" style="-fx-text-fill: white; -fx-background-color: #3498db;" text="Students" />
-            <Button fx:id="issueReturnBtn" style="-fx-text-fill: white; -fx-background-color: #3498db;" text="Issue/Return Books" />
-            <Button fx:id="logoutBtn" style="-fx-text-fill: white; -fx-background-color: #e74c3c;" text="Logout" />
+        <VBox spacing="10" styleClass="sidebar" style="-fx-background-color: #34495e; -fx-padding: 10;">
+            <Button fx:id="manageBooksBtn" text="Manage Books" styleClass="sidebar-button, button-primary" style="-fx-text-fill: white; -fx-background-color: #3498db; -fx-pref-width: 150px; -fx-padding: 12; -fx-cursor: hand; -fx-background-radius: 4px;" />
+            <Button fx:id="manageStudentsBtn" text="Manage Students" styleClass="sidebar-button, button-primary" style="-fx-text-fill: white; -fx-background-color: #3498db; -fx-pref-width: 150px; -fx-padding: 12; -fx-cursor: hand; -fx-background-radius: 4px;" />
+            <Button fx:id="issueReturnBtn" text="Issue/Return Books" styleClass="sidebar-button, button-primary" style="-fx-text-fill: white; -fx-background-color: #3498db; -fx-pref-width: 150px; -fx-padding: 12; -fx-cursor: hand; -fx-background-radius: 4px;" />
+            <Button fx:id="logoutBtn" text="Logout" styleClass="sidebar-button, button-danger" style="-fx-text-fill: white; -fx-background-color: #e74c3c; -fx-pref-width: 150px; -fx-padding: 12; -fx-cursor: hand; -fx-background-radius: 4px;" />
         </VBox>
     </left>
 
     <center>
-        <StackPane fx:id="contentPane" style="-fx-background-color: #ecf0f1;" />
+        <StackPane fx:id="contentPane" styleClass="content-pane" style="-fx-background-color: #ecf0f1;" />
     </center>
 </BorderPane>
+

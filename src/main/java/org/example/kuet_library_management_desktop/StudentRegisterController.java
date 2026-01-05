@@ -26,7 +26,7 @@ public class StudentRegisterController {
     @FXML
     private TextField batchField;
     @FXML
-    private TextField usernameField;
+    private TextField emailField;
     @FXML
     private PasswordField passwordField;
 
@@ -35,7 +35,7 @@ public class StudentRegisterController {
         if (nameField != null) nameField.setPromptText("Full name");
         if (rollField != null) rollField.setPromptText("Roll number");
         if (batchField != null) batchField.setPromptText("Batch/Year");
-        if (usernameField != null) usernameField.setPromptText("Choose username");
+        if (emailField != null) emailField.setPromptText("Email address");
     }
 
     @FXML
@@ -43,24 +43,50 @@ public class StudentRegisterController {
         String name = nameField.getText();
         String roll = rollField.getText();
         String batch = batchField.getText();
-        String username = usernameField.getText();
+        String email = emailField.getText();
         String password = passwordField.getText();
 
-        if (name == null || name.isBlank() || roll == null || roll.isBlank()) {
-            showAlert("Validation Error", "Name and roll are required.");
+        if (name == null || name.isBlank() || roll == null || roll.isBlank() ||
+            email == null || email.isBlank() || password == null || password.isBlank()) {
+            showAlert("Validation Error", "All fields are required.");
             return;
         }
 
-        Student s = new Student(roll, name, username == null ? "" : username, 0);
+        // Validate email format
+        if (!email.contains("@") || !email.contains(".")) {
+            showAlert("Validation Error", "Please enter a valid email address.");
+            return;
+        }
+
+        Student s = new Student();
+        s.setRoll(roll);
+        s.setName(name);
+        s.setBatch(batch);
+        s.setEmail(email);
+        s.setPassword(password);
+        s.setBorrowedCount(0);
+
         StudentRepository repo = new StudentRepository();
-        repo.save(s);
+        boolean success = repo.save(s);
 
-        showAlert("Success", "Student registered: " + roll);
+        if (success) {
+            showAlert("Success", "Student registered successfully! You can now login.");
 
-        try {
-            Navigation.open(event, "/org/example/kuet_library_management_desktop/Student_view.fxml", "Student Dashboard");
-        } catch (Exception e) {
-            e.printStackTrace();
+            // Clear fields
+            nameField.clear();
+            rollField.clear();
+            batchField.clear();
+            emailField.clear();
+            passwordField.clear();
+
+            // Navigate to login page
+            try {
+                Navigation.open(event, "/org/example/kuet_library_management_desktop/StudentLogin_view.fxml", "Student Login");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            showAlert("Error", "Failed to register. Username or roll may already exist.");
         }
     }
 

@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox spacing="10" xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml" style="-fx-padding: 20;">
-    <Label text="Issued Books" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-    <TableView fx:id="issuedBooksTable" prefHeight="300">
-        <columns>
-            <TableColumn fx:id="idColumn" text="Book ID" prefWidth="70" />
-            <TableColumn fx:id="titleColumn" text="Title" prefWidth="150" />
-            <TableColumn fx:id="authorColumn" text="Author" prefWidth="120" />
-            <TableColumn fx:id="genreColumn" text="Genre" prefWidth="100" />
-            <TableColumn fx:id="statusColumn" text="Status" prefWidth="80" />
-        </columns>
-    </TableView>
+<VBox spacing="15" style="-fx-padding: 20; -fx-background-color: white;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+
+    <!-- Title -->
+    <Label text="My Issued Books" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
+        <font>
+            <Font name="System Bold" size="24.0" />
+        </font>
+    </Label>
+
+    <!-- Results Count -->
+    <Label fx:id="issuedCount" text="You have no issued books" style="-fx-text-fill: #7f8c8d; -fx-font-size: 13px;" />
+
+    <!-- Scrollable Results Area -->
+    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+        <content>
+            <VBox fx:id="issuedBooksBox" spacing="8" style="-fx-padding: 5;">
+                <!-- Issued book items will be dynamically added here -->
+            </VBox>
+        </content>
+    </ScrollPane>
+
 </VBox>
+

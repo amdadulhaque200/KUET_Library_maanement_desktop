@@ -2,10 +2,18 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" spacing="10" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
-    <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Student Profile" />
-    <Label text="Name: Amdadul Haque" />
-    <Label text="ID: 2207059" />
-    <Label text="Email: amdadul@example.com" />
+<VBox alignment="CENTER" spacing="15" styleClass="profile-container" style="-fx-padding: 30; -fx-background-color: white; -fx-background-radius: 8px;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+    <Label text="Student Profile" styleClass="profile-title" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50; -fx-padding: 0 0 20 0;">
+        <font>
+            <Font name="System Bold" size="24.0" />
+        </font>
+    </Label>
+    <Label fx:id="nameLabel" text="Name: Loading..." styleClass="profile-field" style="-fx-font-size: 15px; -fx-text-fill: #2c3e50; -fx-padding: 8px;" />
+    <Label fx:id="rollLabel" text="Roll: Loading..." styleClass="profile-field" style="-fx-font-size: 15px; -fx-text-fill: #2c3e50; -fx-padding: 8px;" />
+    <Label fx:id="batchLabel" text="Batch: Loading..." styleClass="profile-field" style="-fx-font-size: 15px; -fx-text-fill: #2c3e50; -fx-padding: 8px;" />
+    <Label fx:id="emailLabel" text="Email: Loading..." styleClass="profile-field" style="-fx-font-size: 15px; -fx-text-fill: #2c3e50; -fx-padding: 8px;" />
+    <Label fx:id="borrowedLabel" text="Books Borrowed: Loading..." styleClass="profile-field" style="-fx-font-size: 15px; -fx-text-fill: #2c3e50; -fx-padding: 8px;" />
 </VBox>
+

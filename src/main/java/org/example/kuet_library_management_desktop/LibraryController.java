@@ -23,24 +23,10 @@ public class LibraryController {
 
     @FXML
     private void openAdminView(ActionEvent event) {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Admin Login");
-        dialog.setHeaderText("Enter admin password");
-        dialog.setContentText("Password:");
-
-        Optional<String> result = dialog.showAndWait();
-        if (result.isPresent()) {
-            String entered = result.get();
-            String stored = PasswordStore.getPassword();
-            if (stored.equals(entered)) {
-                try {
-                    Navigation.open(event, "/org/example/kuet_library_management_desktop/Admin_view.fxml", "Admin Dashboard");
-                } catch (Exception e) {
-                    showAlert("Error", "Failed to open Admin view: " + e.getMessage());
-                }
-            } else {
-                showAlert("Authentication Failed", "Incorrect password. Access denied.");
-            }
+        try {
+            Navigation.open(event, "/org/example/kuet_library_management_desktop/AdminLogin_view.fxml", "Admin Login");
+        } catch (Exception e) {
+            showAlert("Error", "Failed to open Admin login: " + e.getMessage());
         }
     }
 

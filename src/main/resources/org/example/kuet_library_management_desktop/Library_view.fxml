@@ -3,55 +3,37 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="330.0" prefWidth="568.0" spacing="16" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.kuet_library_management_desktop.LibraryController">
+<VBox alignment="CENTER" spacing="40" styleClass="homepage-container" style="-fx-background-color: linear-gradient(to bottom right, #2c3e50, #34495e);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.kuet_library_management_desktop.LibraryController">
 
     <padding>
-        <Insets bottom="24" left="24" right="24" top="24" />
+        <Insets bottom="60" left="60" right="60" top="60" />
     </padding>
 
-    <HBox alignment="CENTER_LEFT" spacing="8">
-        <Button fx:id="backBtn" text="←" onAction="#onBack" visible="false" />
-    </HBox>
-
-    <Label text="KUET Library Management">
+    <Label text="KUET Library Management" styleClass="homepage-title" style="-fx-text-fill: white; -fx-font-size: 36px; -fx-font-weight: bold;">
         <font>
-            <Font name="System Bold Italic" size="33.0" />
+            <Font name="System Bold" size="36.0" />
         </font>
-      <textFill>
-         <LinearGradient endX="1.0" endY="1.0">
-            <stops>
-               <Stop>
-                  <color>
-                     <Color red="0.02262248285114765" green="0.17894737422466278" blue="0.01723196916282177" />
-                  </color>
-               </Stop>
-               <Stop offset="0.9530012997754934">
-                  <color>
-                     <Color red="0.022099999710917473" green="0.17000000178813934" blue="0.017000000923871994" />
-                  </color>
-               </Stop>
-               <Stop offset="1.0">
-                  <color>
-                     <Color red="0.3520987629890442" green="0.4842105209827423" blue="0.17933723330497742" />
-                  </color>
-               </Stop>
-            </stops>
-         </LinearGradient>
-      </textFill>
     </Label>
 
-    <HBox alignment="CENTER" spacing="12">
-        <Button defaultButton="true" onAction="#openAdminView" text="Admin">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font></Button>
-        <Button defaultButton="true" onAction="#openStudentView" text="Student">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font></Button>
-    </HBox>
+    <Label text="Welcome to the Digital Library System" styleClass="homepage-subtitle" style="-fx-text-fill: #ecf0f1; -fx-font-size: 18px;">
+        <font>
+            <Font size="18.0" />
+        </font>
+    </Label>
 
+    <HBox alignment="CENTER" spacing="30">
+        <Button onAction="#openAdminView" text="Admin" styleClass="homepage-button" style="-fx-background-color: #1abc9c; -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; -fx-padding: 20 40; -fx-pref-width: 250px; -fx-cursor: hand; -fx-background-radius: 8px;">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Button>
+        <Button onAction="#openStudentView" text="Student" styleClass="homepage-button" style="-fx-background-color: #1abc9c; -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; -fx-padding: 20 40; -fx-pref-width: 250px; -fx-cursor: hand; -fx-background-radius: 8px;">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Button>
+    </HBox>
 </VBox>
+

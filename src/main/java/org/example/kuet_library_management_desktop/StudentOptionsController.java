@@ -7,7 +7,7 @@ public class StudentOptionsController {
 
     @FXML
     private void onLogin(ActionEvent event) {
-        navigateTo(event, "/org/example/kuet_library_management_desktop/Student_view.fxml", "Student Dashboard");
+        navigateTo(event, "/org/example/kuet_library_management_desktop/StudentLogin_view.fxml", "Student Login");
     }
 
     @FXML

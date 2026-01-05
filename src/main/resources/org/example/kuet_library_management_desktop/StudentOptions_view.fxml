@@ -5,21 +5,46 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="300" prefWidth="400" spacing="20" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.kuet_library_management_desktop.StudentOptionsController">
-    <padding>
-        <Insets bottom="20" left="20" right="20" top="20" />
-    </padding>
-    <children>
-        <HBox alignment="CENTER_LEFT" spacing="8">
-            <Button text="←" onAction="#onBack" />
-        </HBox>
-        <Button fx:id="loginBtn" defaultButton="true" onAction="#onLogin" prefWidth="200" text="Login" textFill="#0c332d">
-         <font>
-            <Font name="Cambria Bold" size="25.0" />
-         </font></Button>
-        <Button fx:id="registerBtn" defaultButton="true" onAction="#onRegister" prefWidth="200" text="Register">
-         <font>
-            <Font name="Cambria Bold" size="25.0" />
-         </font></Button>
-    </children>
-</VBox>
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.kuet_library_management_desktop.StudentOptionsController">
+
+    <!-- Back button - Fixed in top-left corner -->
+    <top>
+        <Button text="← Back" onAction="#onBack" styleClass="button-back"
+                style="-fx-background-color: transparent; -fx-text-fill: #3498db; -fx-cursor: hand; -fx-font-size: 16px; -fx-padding: 10;">
+            <BorderPane.margin>
+                <Insets top="10" left="10" />
+            </BorderPane.margin>
+        </Button>
+    </top>
+
+    <!-- Options centered -->
+    <center>
+        <VBox alignment="CENTER" spacing="30" style="-fx-padding: 40;">
+            <padding>
+                <Insets bottom="40" left="40" right="40" top="20" />
+            </padding>
+
+            <Label text="Student Portal" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
+                <font>
+                    <Font name="System Bold" size="28.0" />
+                </font>
+            </Label>
+
+            <Button fx:id="loginBtn" defaultButton="true" onAction="#onLogin" prefWidth="250" text="Login"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold; -fx-padding: 15; -fx-cursor: hand; -fx-background-radius: 8px;">
+                <font>
+                    <Font name="System Bold" size="20.0" />
+                </font>
+            </Button>
+
+            <Button fx:id="registerBtn" onAction="#onRegister" prefWidth="250" text="Register"
+                    style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold; -fx-padding: 15; -fx-cursor: hand; -fx-background-radius: 8px;">
+                <font>
+                    <Font name="System Bold" size="20.0" />
+                </font>
+            </Button>
+        </VBox>
+    </center>
+
+</BorderPane>
+

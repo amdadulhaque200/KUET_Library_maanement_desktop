@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.kuet_library_management_desktop.AdminLoginController">
+
+    <!-- Back button - Fixed in top-left corner -->
+    <top>
+        <Button text="← Back" onAction="#onBack" styleClass="button-back"
+                style="-fx-background-color: transparent; -fx-text-fill: #3498db; -fx-cursor: hand; -fx-font-size: 16px; -fx-padding: 10;">
+            <BorderPane.margin>
+                <Insets top="10" left="10" />
+            </BorderPane.margin>
+        </Button>
+    </top>
+
+    <!-- Login form centered -->
+    <center>
+        <VBox alignment="CENTER" spacing="20.0" styleClass="login-container" style="-fx-background-color: white; -fx-padding: 40px;">
+            <padding>
+                <Insets bottom="40.0" left="40.0" right="40.0" top="20.0" />
+            </padding>
+
+            <!-- Title -->
+            <Label text="Admin Login" styleClass="login-title" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
+                <font>
+                    <Font name="System Bold" size="28.0" />
+                </font>
+            </Label>
+
+            <Label text="Access the admin dashboard" styleClass="login-subtitle" style="-fx-text-fill: #666; -fx-font-size: 14px;">
+                <font>
+                    <Font size="14.0" />
+                </font>
+            </Label>
+
+            <!-- Email field -->
+            <VBox spacing="8.0" styleClass="spacing-small">
+                <Label text="Email:" styleClass="form-label" style="-fx-font-weight: bold;" />
+                <TextField fx:id="emailField" promptText="Enter admin email" prefWidth="300.0" editable="true" styleClass="text-field" style="-fx-padding: 10; -fx-font-size: 14px; -fx-border-color: #bdc3c7; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4;" />
+            </VBox>
+
+            <!-- Password field -->
+            <VBox spacing="8.0" styleClass="spacing-small">
+                <Label text="Password:" styleClass="form-label" style="-fx-font-weight: bold;" />
+                <PasswordField fx:id="passwordField" promptText="Enter admin password" prefWidth="300.0" styleClass="password-field" style="-fx-padding: 10; -fx-font-size: 14px; -fx-border-color: #bdc3c7; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4;" />
+            </VBox>
+
+            <!-- Login button -->
+            <Button onAction="#onLogin" text="Login as Admin" prefWidth="300.0" styleClass="login-button, button-danger" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 12; -fx-cursor: hand; -fx-background-radius: 4px;">
+                <font>
+                    <Font name="System Bold" size="16.0" />
+                </font>
+            </Button>
+
+            <Label text="Default credentials: admin@kuet.ac.bd / admin123" styleClass="text-muted" style="-fx-text-fill: #999; -fx-font-size: 12px; -fx-font-style: italic;" />
+        </VBox>
+    </center>
+
+</BorderPane>
+

@@ -27,9 +27,22 @@ public class Navigation {
         if (current != null) history.push(current);
 
         Parent root = loadFXML(fxmlPath);
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, 900, 650); // Fixed size: 900x650 for all pages
+
+        // Apply CSS stylesheet
+        try {
+            var cssResource = Navigation.class.getResource("/org/example/kuet_library_management_desktop/styles.css");
+            if (cssResource != null) {
+                String css = cssResource.toExternalForm();
+                scene.getStylesheets().add(css);
+            }
+        } catch (Exception e) {
+            System.err.println("Warning: Could not load CSS stylesheet: " + e.getMessage());
+        }
+
         stage.setTitle(title);
         stage.setScene(scene);
+        stage.centerOnScreen(); // Center the window
         stage.show();
     }
 
