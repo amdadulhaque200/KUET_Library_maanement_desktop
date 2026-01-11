@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.kuet_library_management_desktop.AdminRegisterController">
+
+    <!-- Back button -->
+    <top>
+        <Button text="← Back" onAction="#onBack" styleClass="button-back"
+                style="-fx-background-color: transparent; -fx-text-fill: #3498db; -fx-cursor: hand; -fx-font-size: 16px; -fx-padding: 10;">
+            <BorderPane.margin>
+                <Insets top="10" left="10" />
+            </BorderPane.margin>
+        </Button>
+    </top>
+
+    <!-- Registration form centered -->
+    <center>
+        <VBox alignment="CENTER" spacing="15.0" styleClass="login-container" style="-fx-background-color: white; -fx-padding: 30px;">
+            <padding>
+                <Insets bottom="30.0" left="30.0" right="30.0" top="20.0" />
+            </padding>
+
+            <!-- Title -->
+            <Label text="Admin Registration" styleClass="login-title" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font>
+            </Label>
+
+            <Label text="Create admin account to manage the library system" styleClass="login-subtitle" style="-fx-text-fill: #666; -fx-font-size: 14px;">
+                <font>
+                    <Font size="14.0" />
+                </font>
+            </Label>
+
+            <!-- Name field -->
+            <VBox spacing="8.0" styleClass="spacing-small">
+                <Label text="Full Name:" styleClass="form-label" style="-fx-font-weight: bold;" />
+                <TextField fx:id="nameField" promptText="Enter admin full name" prefWidth="350.0" editable="true" styleClass="text-field" style="-fx-padding: 10; -fx-font-size: 14px; -fx-border-color: #bdc3c7; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4;" />
+            </VBox>
+
+            <!-- ID Number field -->
+            <VBox spacing="8.0" styleClass="spacing-small">
+                <Label text="ID Number:" styleClass="form-label" style="-fx-font-weight: bold;" />
+                <TextField fx:id="idNumberField" promptText="Enter admin ID number" prefWidth="350.0" editable="true" styleClass="text-field" style="-fx-padding: 10; -fx-font-size: 14px; -fx-border-color: #bdc3c7; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4;" />
+            </VBox>
+
+            <!-- Email field -->
+            <VBox spacing="8.0" styleClass="spacing-small">
+                <Label text="Email:" styleClass="form-label" style="-fx-font-weight: bold;" />
+                <TextField fx:id="emailField" promptText="Enter admin email (e.g., admin@kuet.ac.bd)" prefWidth="350.0" editable="true" styleClass="text-field" style="-fx-padding: 10; -fx-font-size: 14px; -fx-border-color: #bdc3c7; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4;" />
+            </VBox>
+
+            <!-- Password field -->
+            <VBox spacing="8.0" styleClass="spacing-small">
+                <Label text="Password:" styleClass="form-label" style="-fx-font-weight: bold;" />
+                <PasswordField fx:id="passwordField" promptText="Create a password" prefWidth="350.0" styleClass="password-field" style="-fx-padding: 10; -fx-font-size: 14px; -fx-border-color: #bdc3c7; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4;" />
+            </VBox>
+
+            <!-- Register button -->
+            <Button onAction="#onRegister" text="Register as Admin" prefWidth="350.0" styleClass="login-button, button-danger" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 12; -fx-cursor: hand; -fx-background-radius: 4px;">
+                <font>
+                    <Font name="System Bold" size="16.0" />
+                </font>
+            </Button>
+
+            <Label text="Already have an admin account? Go back to login." styleClass="text-muted" style="-fx-text-fill: #666; -fx-font-size: 12px;" />
+        </VBox>
+    </center>
+
+</BorderPane>
+

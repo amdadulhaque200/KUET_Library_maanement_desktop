@@ -24,6 +24,7 @@ public class AdminRepository {
                         rs.getString("name")
                 );
                 admin.setPassword(rs.getString("password"));
+                admin.setIdNumber(rs.getString("id_number"));
                 return Optional.of(admin);
             }
         } catch (SQLException e) {

@@ -5,6 +5,7 @@ public class Admin {
     private String email;
     private String password;
     private String name;
+    private String idNumber;
 
     public Admin() {
     }
@@ -45,6 +46,14 @@ public class Admin {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getIdNumber() {
+        return idNumber;
+    }
+
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
     }
 }
 

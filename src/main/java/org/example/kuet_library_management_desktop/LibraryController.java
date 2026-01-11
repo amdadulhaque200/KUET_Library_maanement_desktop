@@ -24,9 +24,9 @@ public class LibraryController {
     @FXML
     private void openAdminView(ActionEvent event) {
         try {
-            Navigation.open(event, "/org/example/kuet_library_management_desktop/AdminLogin_view.fxml", "Admin Login");
+            Navigation.open(event, "/org/example/kuet_library_management_desktop/AdminOptions_view.fxml", "Admin Portal");
         } catch (Exception e) {
-            showAlert("Error", "Failed to open Admin login: " + e.getMessage());
+            showAlert("Error", "Failed to open Admin options: " + e.getMessage());
         }
     }
 

@@ -11,7 +11,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.kuet_library_management_desktop.AdminLoginController">
 
-    <!-- Back button - Fixed in top-left corner -->
+    <!-- Back button -->
     <top>
         <Button text="← Back" onAction="#onBack" styleClass="button-back"
                 style="-fx-background-color: transparent; -fx-text-fill: #3498db; -fx-cursor: hand; -fx-font-size: 16px; -fx-padding: 10;">
@@ -60,7 +60,7 @@
                 </font>
             </Button>
 
-            <Label text="Default credentials: admin@kuet.ac.bd / admin123" styleClass="text-muted" style="-fx-text-fill: #999; -fx-font-size: 12px; -fx-font-style: italic;" />
+            <Label text="Don't have an account? Go back and register." styleClass="text-muted" style="-fx-text-fill: #666; -fx-font-size: 12px;" />
         </VBox>
     </center>
 

@@ -25,7 +25,6 @@ public class DatabaseManager {
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
 
-            // Create students table (using email instead of username)
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS students (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -39,13 +38,13 @@ public class DatabaseManager {
                 )
             """);
 
-            // Create admins table (using email instead of username)
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS admins (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     email TEXT UNIQUE NOT NULL,
                     password TEXT NOT NULL,
                     name TEXT NOT NULL,
+                    id_number TEXT UNIQUE NOT NULL,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
             """);
@@ -78,18 +77,26 @@ public class DatabaseManager {
                 )
             """);
 
-            // Insert default admin if not exists
-            String checkAdmin = "SELECT COUNT(*) FROM admins WHERE email = 'admin@kuet.ac.bd'";
-            ResultSet rs = stmt.executeQuery(checkAdmin);
-            if (rs.next() && rs.getInt(1) == 0) {
-                stmt.execute("""
-                    INSERT INTO admins (email, password, name) 
-                    VALUES ('admin@kuet.ac.bd', 'admin123', 'System Administrator')
-                """);
-            }
+            // Create borrow_requests table for admin approval system
+            stmt.execute("""
+                CREATE TABLE IF NOT EXISTS borrow_requests (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    book_id INTEGER NOT NULL,
+                    student_roll TEXT NOT NULL,
+                    student_name TEXT NOT NULL,
+                    book_title TEXT NOT NULL,
+                    request_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    status TEXT DEFAULT 'Pending',
+                    admin_id INTEGER,
+                    response_date TIMESTAMP,
+                    FOREIGN KEY (book_id) REFERENCES books(id),
+                    FOREIGN KEY (student_roll) REFERENCES students(roll),
+                    FOREIGN KEY (admin_id) REFERENCES admins(id)
+                )
+            """);
 
             // Insert sample books if table is empty
-            rs = stmt.executeQuery("SELECT COUNT(*) FROM books");
+            ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM books");
             if (rs.next() && rs.getInt(1) == 0) {
                 stmt.execute("""
                     INSERT INTO books (title, author, genre, isbn) VALUES
@@ -102,7 +109,6 @@ public class DatabaseManager {
             }
 
             System.out.println("✓ Database initialized successfully");
-            System.out.println("✓ Default admin: admin@kuet.ac.bd / admin123");
 
         } catch (SQLException e) {
             System.err.println("Error initializing database: " + e.getMessage());
@@ -111,7 +117,6 @@ public class DatabaseManager {
     }
 
     public void close() {
-        // SQLite doesn't require explicit connection pool management
         instance = null;
     }
 }

@@ -5,46 +5,62 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox spacing="15" style="-fx-padding: 20; -fx-background-color: white;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.kuet_library_management_desktop.BookSearchController">
 
-    <!-- Title -->
-    <Label text="Search Books" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
-        <font>
-            <Font name="System Bold" size="24.0" />
-        </font>
-    </Label>
-
-    <!-- Search Bar -->
-    <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10; -fx-background-color: #f8f9fa; -fx-background-radius: 8px;">
-        <TextField fx:id="searchField" promptText="Type to search by title, author, or genre..."
-                   prefWidth="400"
-                   style="-fx-padding: 12; -fx-font-size: 14px; -fx-border-color: #bdc3c7; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4;">
-        </TextField>
-        <Button fx:id="searchBtn" text="Search"
-                style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 12 24; -fx-cursor: hand; -fx-background-radius: 4px;">
-            <font>
-                <Font name="System Bold" size="14.0" />
-            </font>
+    <!-- Back button -->
+    <top>
+        <Button fx:id="backButton" text="← Back" onAction="#onBack" style="-fx-background-color: transparent; -fx-text-fill: #3498db; -fx-cursor: hand; -fx-font-size: 16px; -fx-padding: 10;">
+            <BorderPane.margin>
+                <Insets top="10" left="10" />
+            </BorderPane.margin>
         </Button>
-        <Button fx:id="clearBtn" text="Clear"
-                style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 12 24; -fx-cursor: hand; -fx-background-radius: 4px;">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Button>
-    </HBox>
+    </top>
 
-    <!-- Results Count -->
-    <Label fx:id="resultsCount" text="Showing all books" style="-fx-text-fill: #7f8c8d; -fx-font-size: 13px;" />
+    <!-- Main content -->
+    <center>
+        <VBox spacing="15" style="-fx-padding: 20; -fx-background-color: white;">
 
-    <!-- Scrollable Results Area -->
-    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
-        <content>
-            <VBox fx:id="resultsBox" spacing="8" style="-fx-padding: 5;">
-                <!-- Book items will be dynamically added here -->
-            </VBox>
-        </content>
-    </ScrollPane>
+            <!-- Title -->
+            <Label text="Search Books" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
+                <font>
+                    <Font name="System Bold" size="24.0" />
+                </font>
+            </Label>
 
-</VBox>
+            <!-- Search Bar -->
+            <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10; -fx-background-color: #f8f9fa; -fx-background-radius: 8px;">
+                <TextField fx:id="searchField" promptText="Type to search by title, author, or genre..."
+                           prefWidth="400"
+                           style="-fx-padding: 12; -fx-font-size: 14px; -fx-border-color: #bdc3c7; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4;">
+                </TextField>
+                <Button fx:id="searchBtn" text="Search"
+                        style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 12 24; -fx-cursor: hand; -fx-background-radius: 4px;">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="clearBtn" text="Clear"
+                        style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 12 24; -fx-cursor: hand; -fx-background-radius: 4px;">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+            </HBox>
+
+            <!-- Results Count -->
+            <Label fx:id="resultsCount" text="Showing all books" style="-fx-text-fill: #7f8c8d; -fx-font-size: 13px;" />
+
+            <!-- Scrollable Results Area -->
+            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+                <content>
+                    <VBox fx:id="resultsBox" spacing="8" style="-fx-padding: 5;">
+                        <!-- Book items will be dynamically added here -->
+                    </VBox>
+                </content>
+            </ScrollPane>
+
+        </VBox>
+    </center>
+
+</BorderPane>
 

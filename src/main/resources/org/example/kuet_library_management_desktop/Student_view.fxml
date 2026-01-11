@@ -28,7 +28,9 @@
     </left>
 
     <center>
-        <StackPane fx:id="contentPane" styleClass="content-pane" style="-fx-background-color: #ecf0f1;" />
+
+     <StackPane fx:id="contentPane" styleClass="content-pane" style="-fx-background-color: #ecf0f1;" />
+
     </center>
 </BorderPane>
 

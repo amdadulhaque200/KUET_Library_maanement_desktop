@@ -61,12 +61,9 @@ public class StudentController {
             URL url = resolveResource("/org/example/kuet_library_management_desktop/Profile_view.fxml");
             FXMLLoader loader = new FXMLLoader(url);
             Node node = loader.load();
-
-            // Get the logged-in student from SessionManager
             Student currentStudent = SessionManager.getCurrentStudent();
 
             if (currentStudent != null) {
-                // Find the labels in the loaded FXML and update them with current student data
                 VBox profileRoot = (VBox) node;
 
                 Label nameLabel = (Label) profileRoot.lookup("#nameLabel");
@@ -81,7 +78,6 @@ public class StudentController {
                 if (emailLabel != null) emailLabel.setText("Email: " + currentStudent.getEmail());
                 if (borrowedLabel != null) borrowedLabel.setText("Books Borrowed: " + currentStudent.getBorrowedCount());
             } else {
-                // No student logged in - show error
                 VBox errorBox = new VBox(10);
                 errorBox.setStyle("-fx-padding: 20; -fx-alignment: center;");
                 Label errorLabel = new Label("No student logged in. Please login first.");
@@ -103,51 +99,10 @@ public class StudentController {
             FXMLLoader loader = new FXMLLoader(url);
             Node node = loader.load();
 
-            VBox root = (VBox) node;
-            TextField searchField = (TextField) root.lookup("#searchField");
-            Button searchBtn = (Button) root.lookup("#searchBtn");
-            Button clearBtn = (Button) root.lookup("#clearBtn");
-            Label resultsCount = (Label) root.lookup("#resultsCount");
-            VBox resultsBox = (VBox) root.lookup("#resultsBox");
+            // The BookSearch_view now has its own controller that handles everything
+            // Just load and display it
+            setContent(node);
 
-            if (resultsBox == null) {
-                resultsBox = new VBox(8);
-                root.getChildren().add(resultsBox);
-            }
-
-            final VBox finalResultsBox = resultsBox;
-            final Label finalResultsCount = resultsCount;
-
-            // Search button action
-            if (searchBtn != null) {
-                searchBtn.setOnAction(evt -> {
-                    evt.consume();
-                    String query = searchField.getText() == null ? "" : searchField.getText().toLowerCase().trim();
-                    populateResults(finalResultsBox, query, finalResultsCount);
-                });
-            }
-
-            // Real-time search as user types
-            if (searchField != null) {
-                searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-                    String query = newValue == null ? "" : newValue.toLowerCase().trim();
-                    populateResults(finalResultsBox, query, finalResultsCount);
-                });
-            }
-
-            // Clear button action
-            if (clearBtn != null) {
-                clearBtn.setOnAction(evt -> {
-                    evt.consume();
-                    searchField.clear();
-                    populateResults(finalResultsBox, "", finalResultsCount);
-                });
-            }
-
-            // Initial population with all books
-            populateResults(finalResultsBox, "", finalResultsCount);
-
-            setContent(root);
 
         } catch (IOException e) {
             System.err.println("Failed to load BookSearch_view.fxml: " + e.getMessage());
@@ -195,7 +150,6 @@ public class StudentController {
             ? bookRepository.getAll()
             : bookRepository.search(query);
 
-        // Update results count
         if (resultsCount != null) {
             if (query == null || query.isEmpty()) {
                 resultsCount.setText("Showing all books (" + books.size() + " total)");

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.kuet_library_management_desktop.AddBookController">
+
+    <!-- Back button -->
+    <top>
+        <Button text="← Back" onAction="#onBack" style="-fx-background-color: transparent; -fx-text-fill: #3498db; -fx-cursor: hand; -fx-font-size: 16px; -fx-padding: 10;">
+            <BorderPane.margin>
+                <Insets top="10" left="10" />
+            </BorderPane.margin>
+        </Button>
+    </top>
+
+    <!-- Add Book form -->
+    <center>
+        <VBox alignment="CENTER" spacing="15.0" style="-fx-background-color: white; -fx-padding: 30px;">
+            <padding>
+                <Insets bottom="30.0" left="30.0" right="30.0" top="20.0" />
+            </padding>
+
+            <!-- Title -->
+            <Label text="Add New Book" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
+                <font>
+                    <Font name="System Bold" size="28.0" />
+                </font>
+            </Label>
+
+            <Label text="Enter book details to add to the library" style="-fx-text-fill: #666; -fx-font-size: 14px;">
+                <font>
+                    <Font size="14.0" />
+                </font>
+            </Label>
+
+            <!-- Book Title field -->
+            <VBox spacing="8.0">
+                <Label text="Book Title:" style="-fx-font-weight: bold;" />
+                <TextField fx:id="titleField" promptText="Enter book title" prefWidth="400.0" editable="true" style="-fx-padding: 10; -fx-font-size: 14px; -fx-border-color: #bdc3c7; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4;" />
+            </VBox>
+
+            <!-- Author field -->
+            <VBox spacing="8.0">
+                <Label text="Author:" style="-fx-font-weight: bold;" />
+                <TextField fx:id="authorField" promptText="Enter author name" prefWidth="400.0" editable="true" style="-fx-padding: 10; -fx-font-size: 14px; -fx-border-color: #bdc3c7; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4;" />
+            </VBox>
+
+            <!-- Genre field -->
+            <VBox spacing="8.0">
+                <Label text="Genre:" style="-fx-font-weight: bold;" />
+                <TextField fx:id="genreField" promptText="Enter genre (e.g., Fiction, Science, History)" prefWidth="400.0" editable="true" style="-fx-padding: 10; -fx-font-size: 14px; -fx-border-color: #bdc3c7; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4;" />
+            </VBox>
+
+            <!-- Total Copies field -->
+            <VBox spacing="8.0">
+                <Label text="Total Copies (Quantity):" style="-fx-font-weight: bold;" />
+                <TextField fx:id="copiesField" promptText="e.g. 10" prefWidth="400.0" editable="true" style="-fx-padding: 10; -fx-font-size: 14px; -fx-border-color: #bdc3c7; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4;" />
+            </VBox>
+
+            <!-- Add to Library button -->
+            <Button onAction="#onAddBook" text="ADD TO LIBRARY" prefWidth="400.0" style="-fx-background-color: #1abc9c; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 15; -fx-cursor: hand; -fx-background-radius: 4px;">
+                <font>
+                    <Font name="System Bold" size="16.0" />
+                </font>
+            </Button>
+
+        </VBox>
+    </center>
+
+</BorderPane>
+

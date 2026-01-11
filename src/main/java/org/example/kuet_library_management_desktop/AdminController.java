@@ -19,17 +19,26 @@ public class AdminController {
     private StackPane contentPane;
 
     @FXML
-    private Button manageBooksBtn, manageStudentsBtn, issueReturnBtn, logoutBtn;
+    private Button manageBooksBtn, borrowRequestsBtn, manageStudentsBtn, issueReturnBtn, logoutBtn;
 
     private BookRepository bookRepository = new BookRepository();
     private StudentRepository studentRepository = new StudentRepository();
     private IssuedBookRepository issuedBookRepository = new IssuedBookRepository();
+    private BorrowRequestRepository borrowRequestRepository = new BorrowRequestRepository();
 
     @FXML
     public void initialize() {
         loadManageStudentsView();
 
-        manageBooksBtn.setOnAction(e -> { e.consume(); loadManageBooksView(); });
+        manageBooksBtn.setOnAction(e -> {
+            e.consume();
+            try {
+                Navigation.open((ActionEvent)e, "/org/example/kuet_library_management_desktop/ManageBooksOptions_view.fxml", "Manage Books");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+        borrowRequestsBtn.setOnAction(e -> { e.consume(); loadBorrowRequestsView(); });
         manageStudentsBtn.setOnAction(e -> { e.consume(); loadManageStudentsView(); });
         issueReturnBtn.setOnAction(e -> { e.consume(); loadIssueReturnView(); });
         logoutBtn.setOnAction(e -> { e.consume(); handleLogout(); });
@@ -158,7 +167,7 @@ public class AdminController {
             allStudents.getChildren().add(studentLabel);
         }
 
-        HBox top = new HBox(8, new Label("Search by Roll:"), searchField, new Region(), searchBtn);
+        HBox top = new HBox(8, searchField, new Region(), searchBtn);
         HBox.setHgrow(searchField, javafx.scene.layout.Priority.NEVER);
         HBox.setHgrow(new Region(), javafx.scene.layout.Priority.ALWAYS);
         top.setStyle("-fx-padding: 8;");
@@ -272,6 +281,116 @@ public class AdminController {
 
         issueReturnView.getChildren().addAll(title, buttons, issuedList);
         setContent(issueReturnView);
+    }
+
+    private void loadBorrowRequestsView() {
+        VBox requestsView = new VBox(12);
+        requestsView.setStyle("-fx-padding: 16;");
+
+        Label title = new Label("Borrow Requests - Pending Approval");
+        title.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;");
+
+        ScrollPane scrollPane = new ScrollPane();
+        VBox requestsList = new VBox(10);
+        requestsList.setStyle("-fx-padding: 10;");
+        scrollPane.setContent(requestsList);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setStyle("-fx-background-color: transparent;");
+        VBox.setVgrow(scrollPane, javafx.scene.layout.Priority.ALWAYS);
+
+        List<BorrowRequest> pendingRequests = borrowRequestRepository.getPendingRequests();
+
+        if (pendingRequests.isEmpty()) {
+            Label noRequests = new Label("No pending borrow requests");
+            noRequests.setStyle("-fx-text-fill: #7f8c8d; -fx-font-size: 14px; -fx-padding: 20;");
+            requestsList.getChildren().add(noRequests);
+        } else {
+            for (BorrowRequest request : pendingRequests) {
+                HBox requestRow = new HBox(15);
+                requestRow.setStyle("-fx-padding: 15; -fx-background-color: white; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 4px; -fx-background-radius: 4px;");
+                requestRow.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+
+                VBox requestInfo = new VBox(5);
+                Label bookLabel = new Label("📚 " + request.getBookTitle());
+                bookLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #2c3e50;");
+
+                Label studentLabel = new Label("Student: " + request.getStudentName() + " (" + request.getStudentRoll() + ")");
+                studentLabel.setStyle("-fx-text-fill: #7f8c8d; -fx-font-size: 13px;");
+
+                Label dateLabel = new Label("Requested: " + (request.getRequestDate() != null ? request.getRequestDate().toString() : "N/A"));
+                dateLabel.setStyle("-fx-text-fill: #95a5a6; -fx-font-size: 12px;");
+
+                requestInfo.getChildren().addAll(bookLabel, studentLabel, dateLabel);
+
+                Region spacer = new Region();
+                HBox.setHgrow(spacer, javafx.scene.layout.Priority.ALWAYS);
+
+                HBox buttonBox = new HBox(10);
+                Button approveBtn = new Button("✓ Approve");
+                approveBtn.setStyle("-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 4px;");
+                approveBtn.setOnAction(evt -> {
+                    evt.consume();
+                    handleApproveRequest(request);
+                });
+
+                Button rejectBtn = new Button("✗ Reject");
+                rejectBtn.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 4px;");
+                rejectBtn.setOnAction(evt -> {
+                    evt.consume();
+                    handleRejectRequest(request);
+                });
+
+                buttonBox.getChildren().addAll(approveBtn, rejectBtn);
+                requestRow.getChildren().addAll(requestInfo, spacer, buttonBox);
+
+                requestsList.getChildren().add(requestRow);
+            }
+        }
+
+        requestsView.getChildren().addAll(title, scrollPane);
+        setContent(requestsView);
+    }
+
+    private void handleApproveRequest(BorrowRequest request) {
+        Admin currentAdmin = SessionManager.getCurrentAdmin();
+        if (currentAdmin == null) {
+            showAlert("Error", "No admin logged in!", Alert.AlertType.ERROR);
+            return;
+        }
+
+        // Approve the request
+        boolean success = borrowRequestRepository.approveRequest(request.getId(), currentAdmin.getId());
+
+        if (success) {
+            // Issue the book
+            boolean issued = issuedBookRepository.issueBook(request.getBookId(), request.getStudentRoll());
+
+            if (issued) {
+                showAlert("Success", "Borrow request approved and book issued to " + request.getStudentName(), Alert.AlertType.INFORMATION);
+                loadBorrowRequestsView(); // Refresh
+            } else {
+                showAlert("Error", "Request approved but failed to issue book!", Alert.AlertType.ERROR);
+            }
+        } else {
+            showAlert("Error", "Failed to approve request!", Alert.AlertType.ERROR);
+        }
+    }
+
+    private void handleRejectRequest(BorrowRequest request) {
+        Admin currentAdmin = SessionManager.getCurrentAdmin();
+        if (currentAdmin == null) {
+            showAlert("Error", "No admin logged in!", Alert.AlertType.ERROR);
+            return;
+        }
+
+        boolean success = borrowRequestRepository.rejectRequest(request.getId(), currentAdmin.getId());
+
+        if (success) {
+            showAlert("Rejected", "Borrow request has been rejected.", Alert.AlertType.INFORMATION);
+            loadBorrowRequestsView(); // Refresh
+        } else {
+            showAlert("Error", "Failed to reject request!", Alert.AlertType.ERROR);
+        }
     }
 
     private void handleLogout() {

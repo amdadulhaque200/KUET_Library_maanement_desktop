@@ -15,9 +15,7 @@ import java.net.URL;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-/**
- * Simple navigation/history helper: push the current Scene when opening a new FXML, and allow going back.
- */
+
 public class Navigation {
     private static final Deque<Scene> history = new ArrayDeque<>();
 
@@ -29,7 +27,6 @@ public class Navigation {
         Parent root = loadFXML(fxmlPath);
         Scene scene = new Scene(root, 900, 650); // Fixed size: 900x650 for all pages
 
-        // Apply CSS stylesheet
         try {
             var cssResource = Navigation.class.getResource("/org/example/kuet_library_management_desktop/styles.css");
             if (cssResource != null) {
@@ -42,7 +39,7 @@ public class Navigation {
 
         stage.setTitle(title);
         stage.setScene(scene);
-        stage.centerOnScreen(); // Center the window
+        stage.centerOnScreen();
         stage.show();
     }
 

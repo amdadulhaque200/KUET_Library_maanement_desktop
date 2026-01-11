@@ -16,6 +16,7 @@
     <left>
         <VBox spacing="10" styleClass="sidebar" style="-fx-background-color: #34495e; -fx-padding: 10;">
             <Button fx:id="manageBooksBtn" text="Manage Books" styleClass="sidebar-button, button-primary" style="-fx-text-fill: white; -fx-background-color: #3498db; -fx-pref-width: 150px; -fx-padding: 12; -fx-cursor: hand; -fx-background-radius: 4px;" />
+            <Button fx:id="borrowRequestsBtn" text="Borrow Requests" styleClass="sidebar-button, button-primary" style="-fx-text-fill: white; -fx-background-color: #f39c12; -fx-pref-width: 150px; -fx-padding: 12; -fx-cursor: hand; -fx-background-radius: 4px;" />
             <Button fx:id="manageStudentsBtn" text="Manage Students" styleClass="sidebar-button, button-primary" style="-fx-text-fill: white; -fx-background-color: #3498db; -fx-pref-width: 150px; -fx-padding: 12; -fx-cursor: hand; -fx-background-radius: 4px;" />
             <Button fx:id="issueReturnBtn" text="Issue/Return Books" styleClass="sidebar-button, button-primary" style="-fx-text-fill: white; -fx-background-color: #3498db; -fx-pref-width: 150px; -fx-padding: 12; -fx-cursor: hand; -fx-background-radius: 4px;" />
             <Button fx:id="logoutBtn" text="Logout" styleClass="sidebar-button, button-danger" style="-fx-text-fill: white; -fx-background-color: #e74c3c; -fx-pref-width: 150px; -fx-padding: 12; -fx-cursor: hand; -fx-background-radius: 4px;" />
